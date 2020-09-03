@@ -1,0 +1,223 @@
+<div class="card">
+
+    <div class="card-body">
+        <div class="container register">
+            <div class="row">
+                <div class="col-md-3 register-left">
+                    <img src="https://image.ibb.co/n7oTvU/logo_white.png"
+                         alt="" />
+                    <h3>Welcome</h3>
+                    <p>You are 30 seconds away from creating your own account!</p>
+                    <input type="submit"
+                           name=""
+                           value="Login" /><br />
+                </div>
+                <div class="col-md-9 register-right">
+                    <div class="tab-content"
+                         id="myTabContent">
+                        <div class="tab-pane fade show active"
+                             id="home"
+                             role="tabpanel"
+                             aria-labelledby="home-tab">
+                            <h3 class="register-heading">Apply as a new Customer</h3>
+                            <form (ngSubmit) = "save()" 
+                                  [formGroup] ="customerForm">
+
+                                <div class="row register-form">
+                                    
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <input type="text"
+                                                class="form-control"
+                                                placeholder="First Name *"
+                                                formControlName = "firstName"
+                                                [ngClass]="{'is-invalid':(customerForm.get('firstName').touched || customerForm.get('firstName').dirty ) && !customerForm.get('firstName').valid}"
+                                                />
+                                                <span class="invalid-feedback">
+                                                    <span *ngIf="customerForm.get('firstName').errors?.required">
+                                                        Please enter your FirstName
+                                                    </span>
+                                                    <span *ngIf="customerForm.get('firstName').errors?.minlength">
+                                                        FirstName should be min 3 characters
+                                                    </span>
+                                                </span>
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <input type="text"
+                                                class="form-control"
+                                                placeholder="Last Name *"
+                                                formControlName = "lastName"
+                                                [ngClass]="{'is-invalid':(customerForm.get('lastName').touched || customerForm.get('lastName').dirty ) && !customerForm.get('lastName').valid}"
+                                                />
+                                                <span class="invalid-feedback">
+                                                    <span *ngIf="customerForm.get('lastName').errors?.required">
+                                                        Please enter your LastName
+                                                    </span>
+                                                    <span *ngIf="customerForm.get('lastName').errors?.minlength">
+                                                        LastName should be min 3 characters
+                                                    </span>
+                                                </span>
+                                        </div>
+
+                                        <div formGroupName="passwordGroup">
+                                            <div class="form-group">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    placeholder="Password *"
+                                                    formControlName = "password"
+                                                    [ngClass]="{'is-invalid': customerForm.get('passwordGroup').errors ||
+                                                    ((customerForm.get('passwordGroup.password').touched ||
+                                                     customerForm.get('passwordGroup.password').dirty ) && 
+                                                     !customerForm.get('passwordGroup.password').valid)}"
+                                                     />
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    placeholder="Confirm Password *"
+                                                    formControlName = "confPassword"
+                                                    [ngClass]="{'is-invalid': customerForm.get('passwordGroup').errors ||
+                                                    ((customerForm.get('passwordGroup.confPassword').touched || customerForm.get('passwordGroup.confPassword').dirty ) && !customerForm.get('passwordGroup.confPassword').valid)}"
+                                                    />
+                                                    <span class="invalid-feedback">
+                                                        <span *ngIf="customerForm.get('passwordGroup.confPassword').errors?.required">
+                                                            Please re-enter your password 
+                                                        </span>
+                                                        <span *ngIf="customerForm.get('passwordGroup').errors?.match">
+                                                            Password does not matchhh
+                                                        </span>
+                                                    </span>    
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="email"
+                                                class="form-control"
+                                                placeholder="Your Email *"
+                                                formControlName = "email"
+                                                [ngClass]="{'is-invalid':(customerForm.get('email').touched || customerForm.get('email').dirty ) && !customerForm.get('email').valid}"
+                                                 />
+                                                 <span class="invalid-feedback">
+                                                    <span *ngIf="customerForm.get('email').errors?.email">
+                                                        Please enter Valid Email
+                                                    </span>
+                                                    </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text"
+                                                name="txtEmpPhone"
+                                                class="form-control"
+                                                placeholder="Your Phone "
+                                                formControlName = "phone"
+                                                [ngClass]="{'is-invalid':(customerForm.get('phone').touched || customerForm.get('phone').dirty ) && !customerForm.get('phone').valid}"
+                                                />
+                                                <span class="invalid-feedback">
+                                                <span *ngIf="customerForm.get('phone').errors?.required">
+                                                    Please enter your Phone
+                                                </span>
+                                                </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="radio inline space"> Notification:  </label>
+                                            <label class="radio inline space">
+                                                <input type="radio"
+                                                    name="notification"
+                                                    value="email"
+                                                    formControlName = "notification"
+                                                    >
+                                                <span> EMail </span>
+                                            </label>
+                                            <label class="radio inline space">
+                                                <input type="radio"
+                                                    name="notification"
+                                                    formControlName = "notification"
+                                                    
+                                                    value="phone">
+                                                <span>Phone </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        
+                                        <div formArrayName='addressGroup'
+                                            *ngFor="let address of customerForm.get('addressGroup').controls; let i = index">
+                                        <div [formGroupName]= "i">
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    placeholder="street *"
+                                                    formControlName = "street"
+                                                    [ngClass]="{'is-invalid': customerForm.get('addressGroup').errors ||
+                                                    ((customerForm.get('addressGroup.street').touched ||
+                                                     customerForm.get('addressGroup.street').dirty ) &&
+                                                      !customerForm.get('addressGroup.street').valid)}"
+                                                    />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    placeholder="City *"
+                                                    formControlName = "city"
+                                                    [ngClass]="{'is-invalid': customerForm.get('addressGroup').errors ||
+                                                    ((customerForm.get('addressGroup.city').touched ||
+                                                     customerForm.get('addressGroup.city').dirty ) &&
+                                                      !customerForm.get('addressGroup.city').valid)}"
+                                                    />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    placeholder="Zip Code *"
+                                                    formControlName = "zipCode"
+                                                    [ngClass]="{'is-invalid': customerForm.get('addressGroup').errors ||
+                                                    ((customerForm.get('addressGroup.zipCode').touched ||
+                                                     customerForm.get('addressGroup.zipCode').dirty ) &&
+                                                      !customerForm.get('addressGroup.zipCode').valid)}"
+                                                    />
+                                            </div>
+                                            
+                                        </div> 
+                                        </div>
+
+                                        <div class="form-group" style="float: right;">
+                                            <button type="button" class="btn btn-primary"
+                                                    (click)="addAddress()"
+                                                    [disabled]= "!addressGroup.valid">
+                                                     Add Address</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6"></div>
+
+                                    <div class="col-md-6">
+                                        <button type="submit"
+                                            [disabled]= "!customerForm.valid"
+                                            class="btnRegister">
+                                             Register 
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
